@@ -126,26 +126,14 @@
 <li><a href="  " style="color:white"><span class="glyphicon glyphicon-book" style="color:white"> </span> Commerce </a></li>
 <li><a href="  " style="color:white"><span class="glyphicon glyphicon-book" style="color:white"> </span> Arts </a></li>
 <li><a href="  " style="color:white"><span class="glyphicon glyphicon-book" style="color:white"> </span> Novels </a></li>
- <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"style="color:white">
-          Categories
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown"style="color:white">
-          <a class="dropdown-item" href="#">Mathmatics</a>
-          <a class="dropdown-item" href="#">Engineering</a>
-          <a class="dropdown-item" href="#"></a>
-        </div>
-      </li>
+<li><a href="  " style="color:white"><span class="glyphicon glyphicon-book" style="color:white"> </span> Others </a></li>
 
     </ul>
     <ul class="nav navbar-nav navbar-right">
         
-    <li> <div class="search-container">
-    <form >
     
     <button type="submit" style="height:48px; float:right; margin-top:-63px; color:black"><i class="glyphicon glyphicon-search"></i></button>
-    </form>
-  </div></li>
+   
     </ul>
     </div>  
 </div>

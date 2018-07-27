@@ -1,19 +1,55 @@
 <%-- 
-    Document   : header
-    Created on : Jul 25, 2018, 10:49:59 PM
-    Author     : Aarzoo
+    Document   : school
+    Created on : 23 Jul, 2018, 5:53:43 PM
+    Author     : krishna 
 --%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+        <%@page import="java.sql.*"%>
+        <%@page import="javax.sql.*"%>
+         <%@page import="java.io.*"%>
+         <%@page language="java" contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+
 <html>
 <head>
-<meta charset="utf-8">
+    <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="style.css">
+<style>
+div.gallery {
+    margin: 5px;
+    border: 1px solid #ccc;
+    float: left;
+    width: 250px;
+}
+.takeimage{
+    width:100%;
+    height:2000px;
+    
+}
 
-</head> 
+div.gallery:hover {
+    border: 1px solid #777;
+}
+
+div.gallery img {
+    width: 100%;
+    height: auto;
+}
+
+div.desc {
+   
+    text-align: center;
+    font-family:"Times New Roman";
+    font-size:18px;
+    text-align:center;
+    
+}
+</style>
+<script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/F8E7BB27-32D2-0D4E-897B-C963F9A82A89/main.js" charset="UTF-8">
+    
+</script>
+</head>
 <body>
 <div class="container">
 <!--header start-->
@@ -126,30 +162,89 @@
 <li><a href="  " style="color:white"><span class="glyphicon glyphicon-book" style="color:white"> </span> Commerce </a></li>
 <li><a href="  " style="color:white"><span class="glyphicon glyphicon-book" style="color:white"> </span> Arts </a></li>
 <li><a href="  " style="color:white"><span class="glyphicon glyphicon-book" style="color:white"> </span> Novels </a></li>
- <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"style="color:white">
-          Categories
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown"style="color:white">
-          <a class="dropdown-item" href="#">Mathmatics</a>
-          <a class="dropdown-item" href="#">Engineering</a>
-          <a class="dropdown-item" href="#"></a>
-        </div>
-      </li>
+<li><a href="  " style="color:white"><span class="glyphicon glyphicon-book" style="color:white"> </span> Others </a></li>
 
     </ul>
     <ul class="nav navbar-nav navbar-right">
         
     <li> <div class="search-container">
     <form >
-    
-    <button type="submit" style="height:48px; float:right; margin-top:-63px; color:black"><i class="glyphicon glyphicon-search"></i></button>
+      <input type="text" placeholder="Search.." name="search" size="40">
+    <button type="submit" style="height:30px;"><i class="glyphicon glyphicon-search"></i></button>
     </form>
   </div></li>
     </ul>
     </div>  
 </div>
-    
-   </div> 
+    <div class="takeimage">
+        <%
+             Class.forName("com.mysql.jdbc.Driver");     
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test","root","");
+
+                PreparedStatement pstmt = con.prepareStatement("select * from booksell where stream=?");
+                pstmt.setString(1, "Commerce");
+                
+                 ResultSet rs= pstmt.executeQuery();
+                InputStream is=null;
+                int counter=0;
+                 while(rs.next())
+                 {
+                     counter=counter+1;
+                     is=rs.getBinaryStream("bookimage"); 
+                   String aaa="C:/Users/Dell_PC/Documents/NetBeansProjects/pustakmarketmain/web/sellretrival/Commerce/photo"+counter+".jpg";
+                int byteRead=0;
+            OutputStream os=new FileOutputStream(aaa);
+            byte[] buffer=new byte[500000];
+            
+            while((byteRead=is.read(buffer))!=-1){
+               os.write(buffer,0,byteRead);
+            }
+                   String bbb="sellretrival/Commerce/photo"+counter+".jpg";
+                     %>
+                      <div class="gallery">
+                
+                    <img src="<%=bbb%>" alt="5Terre" style="width:250px;height:250px; border:4px solid black;" >
+                
+                <div class="desc" style="width:250px;height:400px;">
+                    <table>
+                    <tr><h3>Book Details</h3></tr>
+                    <tr><td>Book Name:-</td><td><%=rs.getString("bname")%></td></tr>
+                    <tr><td>Selling Price:-</td><td><%=rs.getString("sprice")%></td></tr>
+                    <!--<tr><td>Author:-</td><td><%=rs.getString("author")%></td></tr>
+                    <tr><td>Publisher:-</td><td><%=rs.getString("publisher")%></td></tr>
+                    <tr><td>Edition:-</td><td><%=rs.getString("edition")%></td></tr>
+                    <tr><td>ISBN No.:-</td><td><%=rs.getString("isbnno")%></td></tr>
+                    <tr><td>Original Price:-</td><td><%=rs.getString("oprice")%></td></tr>
+                    <tr><td>Selling Price:-</td><td><%=rs.getString("sprice")%></td></tr>
+                    <tr><td>Book Condition:-</td><td><%=rs.getString("condition")%></td></tr>-->
+                    <button type="button" class="btn btn-success" onclick="location.href='demo123.jsp?isbn=<%=rs.getString("isbnno")%>';">Further Details</button>
+                    </table>
+                </div>
+              </div>
+              <%   
+              os.close();      
+            }
+
+                 con.close();
+                pstmt.close();
+                 %>
+               </div> 
+      <div class="footer">
+<img src="images/fimage.png" style="height:50px; margin-top:40px; margin-left:90px; position:relative"><br>
+<img src="images/fb-icon.png" class="links" style="margin-left: 3%; float:left" >
+<img src="images/google.png" class="links" style="margin-left: 1%; float:left" >
+<img src="images/instagram.png" class="links"  style="height:60px; width:60px; margin-left:1%; float:left ">
+<img src="images/twitter.png" class="links" style="margin-left: 1%; float:left">
+
+<a href="contactus.html"><p class="contactus">CONTACT US</p></a>
+<a href="ourteam.html"><p class="contactus">OUR TEAM</p></a>
+<a href="faq.html"><p class="contactus">FAQs</p></a>
+<p class="copyright">Copy Right 2018 Pustak Market,LLC| All Rights Reserved</p>
+<p class="terms"  style="margin-right:55px;">Privacy</p>
+<p class="terms">Terms</p> 
+</div>
+
+</div>
+
     </body>
 </html>
